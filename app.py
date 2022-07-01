@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from apps.routes import router as apps_router
 from conf import settings
 
 app = FastAPI(
@@ -11,3 +12,5 @@ app = FastAPI(
     redoc_url=settings.REDOC_URL,
     openapi_url=settings.OPENAPI_URL,
 )
+
+app.include_router(router=apps_router)
