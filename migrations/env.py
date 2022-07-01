@@ -1,10 +1,16 @@
+import os
+from importlib import import_module
 from logging.config import fileConfig
+from pathlib import Path
 
 from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from conf import settings
+
+for migration_module in Path(Path(__file__).parent.parent / 'apps').rglob("**/models.py"):
+    import_module(f"{'.'.join(migration_module.parts[-3:])}".replace(os.sep, ".").removesuffix(".py").removeprefix("."))
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +25,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = settings.__DATABASE_METADATA
+target_metadata = settings.DATABASE_METADATA
 
 
 # other values from the config, defined by the needs of env.py,

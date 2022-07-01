@@ -8,6 +8,8 @@ env.read_env(override=True)
 DEBUG: bool = env.bool("DEBUG", default=False)
 
 DATABASE_URL: str = env.str("DATABASE_URL")
+DATABASE = databases.Database(url=DATABASE_URL)
+DATABASE_METADATA = sqlalchemy.MetaData()
 
 PROJECT_TITLE: str = env.str("PROJECT_TITLE", default="Прокси сервер ГосЗакупок")
 PROJECT_DESCRIPTION: str = env.str("PROJECT_DESCRIPTION", default="")
@@ -18,6 +20,3 @@ SWAGGER_URL: str = env.str("SWAGGER_URL", default="/docs")
 REDOC_URL: str = env.str("SWAGGER_URL", default="/redoc")
 
 TIMEZONE = "Europe/Moskow"
-
-__DATABASE = databases.Database(DATABASE_URL)
-__DATABASE_METADATA = sqlalchemy.MetaData()
